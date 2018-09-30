@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -40,9 +42,7 @@ public class Request{
 	
 	@RequestMapping(value = "/api/v1/wind/{zipcode}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public String getWeather(@PathVariable("zipcode") String zip) throws IOException, JSONException, InterruptedException {
-		weatherservice.clearCache_After_15Min();
 		return weatherservice.getWeatherJSON(zip);
-		
 		
 	}
 	
@@ -51,6 +51,8 @@ public class Request{
 		System.out.println("Cache has been evicted");
 		weatherservice.clearCache();
 	}
+	
+
 	
 	
 }

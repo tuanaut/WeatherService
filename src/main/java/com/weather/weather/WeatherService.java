@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Service
 public class WeatherService {
 	
-	@Cacheable("wind")
+	@Cacheable(CacheConfig.CACHE_ONE)
 	public String getWeatherJSON(String zip) throws IOException, JSONException, InterruptedException {
 		
 		Thread.sleep(5000);
@@ -33,8 +33,8 @@ public class WeatherService {
 		System.out.println(zipcode);
 		URL obj = new URL(url);
 	    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	     // optional default is GET
-	     con.setRequestMethod("GET");
+
+	    con.setRequestMethod("GET");
 	     int responseCode = con.getResponseCode();
 	     System.out.println("\nSending 'GET' request to URL : " + url);
 	     System.out.println("Response Code : " + responseCode);
@@ -62,14 +62,9 @@ public class WeatherService {
 		return wind.toString();
 	}
 	
-	@Scheduled(fixedDelay = 10000)
 	@CacheEvict(value = "wind", allEntries = true)
-	public void clearCache_After_15Min() {
-		System.out.println("Cache cleared after 15");
-	}
-	
-	@CacheEvict(value = "wind", allEntries = true)
-	public void clearCache() {
-		System.out.println("Cache cleared instantly");
+	public String clearCache() {
+		System.out.println("Cache cleared");
+		return "Cache Cleared";
 	}
 }
