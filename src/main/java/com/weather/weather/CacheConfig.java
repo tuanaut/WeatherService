@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.google.common.cache.CacheBuilder;
 
+//Class to config the cache for the wind resource
+//Having the cache expire after 15 minutes
 @Configuration
 @EnableCaching
 public class CacheConfig {
